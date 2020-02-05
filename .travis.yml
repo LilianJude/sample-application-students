@@ -17,7 +17,6 @@ jobs:
   include:
     -stage: test
      script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.projectKey=LilianJude_sample-application-students
-     
     -stage: build
      script:
        - echo "$PASSWORD_DOCKER" | docker login -u "$USERNAME_DOCKER" --password-stdin
