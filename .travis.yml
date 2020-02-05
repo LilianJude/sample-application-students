@@ -18,3 +18,12 @@ script:
   - docker build -t $USERNAME_DOCKER/http-api-server ./sample-application-http-api-server
   - docker tag $USERNAME_DOCKER/http-api-server  $USERNAME_DOCKER/sample-application-http-api-server
   - docker push $USERNAME_DOCKER/sample-application-http-api-server
+
+addons:
+  sonarcloud:
+    organization: "lilianjude"
+    token:
+      secure: "TOKEN_SONARCLOUD" # encrypted value of your token
+
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar
