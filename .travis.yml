@@ -16,5 +16,5 @@ script:
   - docker push $USERNAME_DOCKER/sample-application-db-changelog-job
 
   - docker build -t $USERNAME_DOCKER/http-api-server ./sample-application-http-api-server
-  - docker tag $USERNAME_DOCKER/http-api-job  $USERNAME_DOCKER/sample-application-http-api-server
+  - docker tag $USERNAME_DOCKER/http-api-server  $USERNAME_DOCKER/sample-application-http-api-server
   - docker push $USERNAME_DOCKER/sample-application-http-api-server
