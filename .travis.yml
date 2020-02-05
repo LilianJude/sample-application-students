@@ -13,14 +13,18 @@ addons:
     token:
       secure: "$TOKEN_SONARCLOUD" # encrypted value of your token
 
-script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.projectKey=LilianJude_sample-application-students
-  - echo "$PASSWORD_DOCKER" | docker login -u "$USERNAME_DOCKER" --password-stdin
+jobs:
+  include:
+    -stage: test
+     script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.projectKey=LilianJude_sample-application-students
+    -stage: build
+     script:
+       - echo "$PASSWORD_DOCKER" | docker login -u "$USERNAME_DOCKER" --password-stdin
 
-  - docker build -t $USERNAME_DOCKER/db-changelog-job ./sample-application-db-changelog-job
-  - docker tag $USERNAME_DOCKER/db-changelog-job  $USERNAME_DOCKER/sample-application-db-changelog-job
-  - docker push $USERNAME_DOCKER/sample-application-db-changelog-job
+       - docker build -t $USERNAME_DOCKER/db-changelog-job ./sample-application-db-changelog-job
+       - docker tag $USERNAME_DOCKER/db-changelog-job  $USERNAME_DOCKER/sample-application-db-changelog-job
+       - docker push $USERNAME_DOCKER/sample-application-db-changelog-job
 
-  - docker build -t $USERNAME_DOCKER/http-api-server ./sample-application-http-api-server
-  - docker tag $USERNAME_DOCKER/http-api-server  $USERNAME_DOCKER/sample-application-http-api-server
-  - docker push $USERNAME_DOCKER/sample-application-http-api-server
+       - docker build -t $USERNAME_DOCKER/http-api-server ./sample-application-http-api-server
+       - docker tag $USERNAME_DOCKER/http-api-server  $USERNAME_DOCKER/sample-application-http-api-server
+       - docker push $USERNAME_DOCKER/sample-application-http-api-server
