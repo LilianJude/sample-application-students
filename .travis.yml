@@ -9,8 +9,8 @@ services:
 
 script:
   - mvn clean verify
-  - docker build -t sample-application-db-changelog-job .
-  - docker build -t sample-application-http-api-server .
+  - docker build -t sample-application-db-changelog-job ./sample-application-db-changelog-job
+  - docker build -t sample-application-http-api-server ./sample-application-http-api-server
 
 deploy:
   provider: script
@@ -20,3 +20,5 @@ deploy:
       - docker images
       - docker tag sample-application-students $DOCKER_USERNAME/sample-application-students
       - docker push $DOCKER_USERNAME/sample-application-students
+  on:
+    branch: develop
